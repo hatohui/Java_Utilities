@@ -66,4 +66,26 @@ public class ColorWrapper {
             default -> throw new IllegalArgumentException("Invalid Color.");
         };
     }
+
+    public String addBackgroundColor(String string, String color) {
+        return switch (color.toUpperCase()) {
+            case "BLACK" -> BACKGROUND_BLACK + string + RESET;
+            case "RED" -> BACKGROUND_RED + string + RESET;
+            case "GREEN" -> BACKGROUND_GREEN + string + RESET;
+            case "YELLOW" -> BACKGROUND_YELLOW + string + RESET;
+            case "BLUE" -> BACKGROUND_BLUE + string + RESET;
+            case "MAGENTA" -> BACKGROUND_MAGENTA + string + RESET;
+            case "CYAN" -> BACKGROUND_CYAN + string + RESET;
+            case "WHITE" -> BACKGROUND_WHITE + string + RESET;
+            case "BRIGHT_BLACK" -> BRIGHT_BACKGROUND_BLACK + string + RESET;
+            case "BRIGHT_RED" -> BRIGHT_BACKGROUND_RED + string + RESET;
+            case "BRIGHT_GREEN" -> BRIGHT_BACKGROUND_GREEN + string + RESET;
+            case "BRIGHT_YELLOW" -> BRIGHT_BACKGROUND_YELLOW + string + RESET;
+            case "BRIGHT_BLUE" -> BRIGHT_BACKGROUND_BLUE + string + RESET;
+            case "BRIGHT_MAGENTA" -> BRIGHT_BACKGROUND_MAGENTA + string + RESET;
+            case "BRIGHT_CYAN" -> BRIGHT_BACKGROUND_CYAN + string + RESET;
+            case "BRIGHT_WHITE" -> BRIGHT_BACKGROUND_WHITE + string + RESET;
+            default -> throw new IllegalArgumentException("Invalid Background Color.");
+        };
+    }
 }
