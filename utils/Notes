@@ -1,0 +1,35 @@
+Some nice characters for UI dev:
+
+>> Single Line Characters:
+Horizontal line: ─
+Vertical line: │
+Top-left corner: ┌
+Top-right corner: ┐
+Bottom-left corner: └
+Bottom-right corner: ┘
+T-junctions:
+    Left: ├
+    Right: ┤
+    Top: ┬
+    Bottom: ┴
+    Cross: ┼
+
+>> Double Line Characters:
+Horizontal line: ═
+Vertical line: ║
+Top-left corner: ╔
+Top-right corner: ╗
+Bottom-left corner: ╚
+Bottom-right corner: ╝
+T-junctions:
+    Left: ╠
+    Right: ╣
+    Top: ╦
+    Bottom: ╩
+    Cross: ╬
+
+>> Block Characters:
+Full block: █
+Light shade: ░
+Medium shade: ▒
+Dark shade: ▓
