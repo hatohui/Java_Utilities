@@ -20,6 +20,7 @@ public class UIBuilder {
     private static final char horizontal = '═';
     private static final char bottomLeft = '╚';
     private static final char bottomRight = '╝';
+    private static final char background = ' ';
     //init
     private int horizontalLength = 70;
 
