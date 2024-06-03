@@ -7,7 +7,8 @@ public class Display {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Generates a menu of options.
+     * Generates a menu of options and get user's option.
+     * (use printMenu for better UI)
      * <p>
      * Examples: for input <b>["foo","boo","woo"]</b>
      *  <br>1. foo
@@ -71,5 +72,31 @@ public class Display {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void separator(char material, int amount) {
+        if (amount < 0)
+            throw new IllegalArgumentException("Amount must > 0");
+        StringBuilder builder = new StringBuilder();
+
+        //generate the separator
+        Stream.generate(() -> material)
+                .limit(amount)
+                .forEach(builder::append);
+
+        System.out.println(builder);
+    }
+
+    public static void separator(char material) {
+        separator(material, 70);
+    }
+
+    public static void separator() {
+        separator('#', 70);
+    }
+
+    public static void printMenu(String title, String[] options) {
+        separator();
+
     }
 }

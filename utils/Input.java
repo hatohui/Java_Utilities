@@ -1,4 +1,4 @@
-//package utils;
+package utils;
 
 import java.util.Scanner;
 
@@ -68,7 +68,7 @@ public class Input {
      * @throws IllegalArgumentException when no message found.
      */
     public static String getString(String message) {
-        return Input.getString(message, false, null);
+        return getString(message, false, null);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Input {
      * @throws IllegalArgumentException when no message found.
      */
     public static String string(String message, boolean allowSpecial) {
-        return Input.getString(message, allowSpecial, null);
+        return getString(message, allowSpecial, null);
     }
 
     /**
@@ -106,7 +106,7 @@ public class Input {
      * @throws IllegalArgumentException when no message found.
      */
     public static String getString(String message, String regex) {
-        return Input.getString(message, true, regex);
+        return getString(message, true, regex);
     }
 
     /* HANDLE NUMBERS*/
@@ -171,7 +171,7 @@ public class Input {
      * @throws IllegalArgumentException when no message found.
      */
     public static int getInteger(String message, int bound) {
-        return Input.getInteger(message, 0, bound);
+        return getInteger(message, 0, bound);
     }
 
     /**
@@ -184,7 +184,7 @@ public class Input {
      * @throws IllegalArgumentException when no message found.
      */
     public static int getInteger(String message) {
-        return Input.getInteger(message, 0, 0);
+        return getInteger(message, 0, 0);
     }
 
     /* DOUBLE */
@@ -246,7 +246,7 @@ public class Input {
      * @throws IllegalArgumentException when no message found.
      */
     public static double getDouble(String message, int bound) {
-        return Input.getDouble(message, 0, bound);
+        return getDouble(message, 0, bound);
     }
 
     /**
@@ -259,7 +259,7 @@ public class Input {
      * @throws IllegalArgumentException when no message is found
      */
     public static double getDouble(String message) {
-        return Input.getDouble(message, 0, 0);
+        return getDouble(message, 0, 0);
     }
 
     /* FLOAT */
@@ -321,7 +321,7 @@ public class Input {
      * @throws IllegalArgumentException when no message is found
      */
     public static float getFloat(String message, int bound) {
-        return Input.getFloat(message, 0, bound);
+        return getFloat(message, 0, bound);
     }
 
     /**
@@ -334,7 +334,7 @@ public class Input {
      * @throws IllegalArgumentException when no message is found
      */
     public static float getFloat(String message) {
-        return Input.getFloat(message, 0, 0);
+        return getFloat(message, 0, 0);
     }
 
     /* CHARACTER */
