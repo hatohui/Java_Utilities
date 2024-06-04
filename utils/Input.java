@@ -133,7 +133,7 @@ public class Input {
         if (floor > ceiling) {
             throw new IllegalArgumentException("Floor must be lower than ceiling");
         } else if ((floor != 0 || ceiling != 0) && floor == ceiling) {
-            throw new IllegalArgumentException(("Floor "));
+            throw new IllegalArgumentException(("Floor must < than ceiling"));
         }
 
         //getInput

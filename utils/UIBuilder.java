@@ -1,268 +1,217 @@
 package utils;
 
-import java.util.stream.Stream;
-
-/**
- * Consists of console commands for printing and creating console app's UIs.
+/**A tool for building UI at your convenience.
  * @author hatohui
+ * @version 1.0.0
  * */
 public class UIBuilder {
-    //change here for components
-    //loading
-    private static final char completedLoading = '█';
-    private static final char incompleteLoading = '░';
-    //separators
-    private static final char defaultMaterial = '═';
-    //UI walls
-    private static final char vertical = '║';
-    private static final char topLeft = '╔';
-    private static final char topRight = '╗';
-    private static final char horizontal = '═';
-    private static final char bottomLeft = '╚';
-    private static final char bottomRight = '╝';
-    private static final char background = ' ';
-    //init
-    private int horizontalLength = 70;
+    private final UIComponents Compo = new UIComponents();
+    private final ColorWrapper Color = new ColorWrapper();
+    private UserInterface UI;
+    private String currentUI = "";
 
-    /**
+    /**Default constructor which create a
+     * new empty UserInterface by default.
+     * UI by default have the size of 70.
      * */
-    public UIBuilder () {
+    public UIBuilder() {
+        this.UI = new UserInterface();
     }
 
-    /**Constructor for UIBuilder.
-     * <p>If contain options for one letter needs at least 15 horizontal length.
-     * Which increase by the length of the option's string.
-     * @param horizontalLength an integer > 2 and <= 100 that indicates
-     *                         the length of the UI horizontally
-     * @throws IllegalArgumentException when the received integer is < 2 or > 100.
+    /**Constructor for UIBuilder, takes one parameter
+     * and create a new empty User Interface.
+     * @param horizontalLength set the horizontal length
+     *                         of the said UI.
      * */
     public UIBuilder(int horizontalLength) {
-        if (horizontalLength < 2 || horizontalLength >= 100)
-            throw new IllegalArgumentException("size must be > 2 and <= 100");
-        this.horizontalLength = horizontalLength;
+        this.UI = new UserInterface();
+        Compo.setHorizontalLength(horizontalLength);
     }
 
-    /**
-     * Print into the console an animated loading bar: █████░░░░░░
-     * <br>(change the values in the source code if you want a different bar)
-     * @param message - a string to display before the loading bar.
-     * @param loadTime - an integer indicates amount of tick
-     *                 for the loading bar.
-     * @param interval - an integer that indicatses time period
-     *                per tick (in milliseconds).
+    /* UTILIZING UI COMPONENTS */
+
+    /**Set the size of the UI to a new given size
+     * @param horizontal an integer that the size
+     *                   of the UI is set to.
      * */
-    public void loadingBar(String message, int loadTime, int interval) {
-        try {
-            StringBuilder builder = new StringBuilder();
-
-            if (!message.isEmpty()) message += "\t";
-
-            //generates the stream
-            Stream.generate(() -> incompleteLoading)
-                    .limit(loadTime)
-                    .forEach(builder::append);
-
-            //loads
-            for (int i = 0; i < loadTime; ++i) {
-                builder.replace(i,i+1, java.lang.String.valueOf(completedLoading));
-                java.lang.String loading = "\r"+ message + builder;
-                System.out.print(loading);
-                Thread.sleep(interval);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public UIBuilder setSize(int horizontal) {
+        Compo.setHorizontalLength(horizontal);
+        return this;
     }
 
-    /**
-     * Print a separator made of given character in desired length.
-     *
-     * @param material a character that the separator is made of.
-     * @param amount    amount of material in the line.
-     * @throws IllegalArgumentException when amount of material is <= 0.
-    * */
-    public void separator(char material, int amount) {
-        if (amount < 0)
-            throw new IllegalArgumentException("Amount must > 0");
-
-        StringBuilder builder = new StringBuilder();
-
-        //generate the separator
-        Stream.generate(() -> material)
-                .limit(amount)
-                .forEach(builder::append);
-
-        System.out.print(builder);
-    }
-
-    /**
-     * Print a separator made of given character.
-     * Default length is 70.
-     * @param  material a character that the separator is made of
+    /**Print an animated loading bar onto the console.
+     * @param message a String that is displayed
+     *                before the loading.
+     * @param ticks number of ticks for the loading bar.
+     * @param interval defines the time in between the ticks.
      * */
-    public void separator(char material) {
-        separator(material, horizontalLength);
+    public UIBuilder loader(String message, int ticks, int interval) {
+        Compo.loadingBar(message, ticks, interval);
+        return this;
     }
 
-    /**
-     * Print a separator made of given character with default
-     * length and default material in source.
+    /**Add a header for your UI displaying the given text
+     * in the middle.
+     * @param name a String to be displayed.
      * */
-    public void separator() {
-        separator(defaultMaterial, horizontalLength);
+    public UIBuilder header(String name) {
+        currentUI += Compo.header(name) + "\n";
+        return this;
     }
 
-    /**Print the UIs ceiling into the console.
+    /**Add the top wall (ceiling) for your UI.
      * */
-    public void topWall() {
-        StringBuilder topWall = new StringBuilder();
-
-        topWall.append(topLeft);
-
-        Stream.generate(() -> horizontal)
-                .limit(horizontalLength - 2)
-                .forEach(topWall::append);
-
-        topWall.append(topRight);
-
-        System.out.println(topWall);
+    public UIBuilder topWall() {
+        currentUI += Compo.topWall() + "\n";
+        return this;
     }
 
-    /**Print the UIs floor into the console.
+    /**Add a separator line to your UI.
      * */
-    public void bottomWall() {
-        StringBuilder bottomWall = new StringBuilder();
-
-        bottomWall.append(bottomLeft);
-
-        Stream.generate(() -> horizontal)
-                .limit(horizontalLength - 2)
-                .forEach(bottomWall::append);
-
-        bottomWall.append(bottomRight);
-
-        System.out.println(bottomWall);
+    public UIBuilder separator() {
+        currentUI += Compo.separator() + "\n";
+        return this;
     }
 
-    /**Print a wall with two ends into the console.
+    /**Add a separator line to your UI made of given
+     * material.
+     * @param material a char symbol constructing the separator.
      * */
-    public void emptyWall() {
-        StringBuilder emptyLine = new StringBuilder();
-
-        emptyLine.append(vertical);
-        Stream.generate(() -> ' ')
-                .limit(horizontalLength - 2)
-                .forEach(emptyLine::append);
-        emptyLine.append(vertical);
-
-        System.out.println(emptyLine);
+    public UIBuilder separator(Character material) {
+        currentUI += Compo.separator(material) + "\n";
+        return this;
     }
 
-    /**Print a Header with given title into the console.
-     * @param title a string that will be printed into the console.
-     * @throws IllegalStateException when the title's length is too big compared
-     * to the default horizontal length.
+    /**Add the bottom wall String (floor) to your UI.
      * */
-    public void header(String title) {
-        int padding = (horizontalLength - 2 - title.length())/2;
-
-        if (horizontalLength - 2 < title.length())
-            throw new IllegalStateException("Title won't fit, title length is: "
-                    + title.length() + " while we only have " + (horizontalLength - 2));
-
-        StringBuilder header= new StringBuilder();
-
-        header.append(vertical);
-        Stream.generate(() -> ' ')
-                .limit(padding)
-                .forEach(header::append);
-        header.append(title);
-
-        if ((horizontalLength - title.length())%2==1) padding++;
-        Stream.generate(() -> ' ')
-                .limit(padding)
-                .forEach(header::append);
-        header.append(vertical);
-
-        System.out.println(header);
+    public UIBuilder bottomWall() {
+        currentUI += Compo.bottomWall() + "\n";
+        return this;
     }
 
-    /**Print a number of options wrapped by the walls within the UI.
-     * <p></p>
-     * @param options a String array containing options
-     *                to be printed.
-     * @throws IllegalArgumentException when options is empty or when
-     * the passed argument is null.
+    /**Add an empty space with two walls on the side to
+     * your UI.
+     * */
+    public UIBuilder emptyWall() {
+        currentUI += Compo.emptyWall() + "\n";
+        return this;
+    }
+
+    /**Add a certain amount of options to your UI for display.
+     * Amount is indicated by the length of the String array passed.
+     * @param options a String array containing the options to be
+     *                printed.
+     * */
+    public UIBuilder options(String[] options) {
+        currentUI += Compo.options(options) + "\n";
+        return this;
+    }
+
+    /**Add an option bar using a custom button text and the description
+     * of the option to the UI.
+     * @param buttonText a String to display on the button
+     * @param optionText a String to what the option is for
+     * */
+    public UIBuilder option(String buttonText, String optionText) {
+        currentUI += Compo.option(buttonText, optionText) + "\n";
+        return this;
+    }
+
+    /**Add a block displaying the given text to the UI. The
+     * distance from the UI's walls to the String is given.
+     * @param padding an integer displaying the distance from
+     *                the wall to the content
+     * @param text a String to display.
+     * */
+    public UIBuilder description(String text, int padding) {
+        currentUI += Compo.description(text, padding) + "\n";
+        return this;
+    }
+
+    /**Add a String to be displayed along with a text
+     * closer to the left, the distance is decided with the
+     * padding given.
+     * @param text a String to be displayed.
+     * @param padding an integer indicating the distance from the
+     *                left wall to its content.
+     * */
+    public UIBuilder leftString(String text, int padding) {
+        currentUI += Compo.leftString(text, padding) + "\n";
+        return this;
+    }
+
+    /**Add a String to be displayed along with a text
+     * closer to the right, the distance is decided with the
+     * padding given.
+     * @param text a String to be displayed.
+     * @param padding an integer indicating the distance from the
+     *                right wall to its content.
+     * */
+    public UIBuilder rightString(String text, int padding) {
+        currentUI += Compo.rightString(text, padding) + "\n";
+        return this;
+    }
+
+    //FUNCTIONALITY
+    /**Reset the UIBuilder, wipes all data so the UI
+     * return to its initial state.
      */
-    public void options(String[] options) {
-        //handle null
-        if (options == null)
-            throw new IllegalArgumentException("Passed argument is null.");
-
-        //handle empty
-        if (options.length == 0)
-            throw new IllegalArgumentException("Passed String array can't be empty.");
-
-        int count = 1;
-        for (String option : options) {
-            //initializes
-            StringBuilder string = new StringBuilder();
-            String opt= "[" + count + "]";
-
-            //handle not enough space
-            if ((horizontalLength - 2) < option.length())
-                throw new IllegalStateException("The option's text length cannot fit" +
-                        ", optLength is " + option.length() + " and horizontalLength is " +
-                        (horizontalLength - 2));
-
-            int padding = (horizontalLength - 2 - option.length()) / 2;
-
-            //check if enough space to have option bar
-            if (padding < 6)
-                throw new IllegalStateException("Not enough length to fit in the option's text");
-
-            int pad = padding/2;
-            //building the string
-            string.append(vertical);
-            Stream.generate(() -> ' ')
-                    .limit(pad - 3)
-                    .forEach(string::append);
-
-            string.append(opt);
-
-            if (!(padding%2==0)) pad += 1;
-
-            Stream.generate(() -> ' ')
-                    .limit(pad)
-                    .forEach(string::append);
-
-            string.append(option);
-
-            if ((horizontalLength - option.length()) % 2 == 1) padding++;
-            Stream.generate(() -> ' ')
-                    .limit(padding)
-                    .forEach(string::append);
-            string.append(vertical);
-
-            System.out.println(string);
-            count++;
-        }
+    public void reset() {
+        UI = new UserInterface();
+        currentUI = "";
     }
 
-    public void description(String description) {
-        //todo
-        //check null
-        if (description.isEmpty())
-            throw new IllegalArgumentException("Argument passed is empty or null, if you wanted" +
-                    " an empty line use emptyWall");
-        //initializes
-        StringBuilder string = new StringBuilder();
-        int padding = (horizontalLength - 2 - description.length())/2;
+    /**Return the UserInterface Object containing data of your
+     * preset Interface then RESET the UIBuilder to its original
+     * state. All data are wiped.
+     * @return an UserInterface object
+     * */
+    public UserInterface saveAndReset() {
+        UserInterface value = new UserInterface();
+        value.setUI(currentUI);
+        UI = new UserInterface();
+        currentUI = "";
+        return value;
+    }
 
-        //if longer then expected create new line;
-        if (padding < 0) {
-            return;
-        }
-        //
+    /**Store the UI given to the current UserInterface
+     * object then reset the data in the UIBuilder. If you wish
+     * to access or restore the data use load()
+     * */
+    public UIBuilder save() {
+        UI.setUI(currentUI);
+        currentUI = "";
+        return this;
+    }
+
+    /**Load the UI into the current data in the builder
+     * for further operations. Usually used to load presets.
+     * */
+    public UIBuilder load() {
+        currentUI = UI.getUI();
+        return this;
+    }
+
+    /**Save the UI into the UserInterface object and return it.
+     * @return UserInterface object
+     * */
+    public UserInterface saveAndReturn() {
+        UI.setUI(currentUI);
+        return UI;
+    }
+
+    /**Set the current UserInterface object that UIBuilder
+     * is functioning on to a different one.
+     * */
+    public UIBuilder use(UserInterface newUI) {
+        UI = newUI;
+        return this;
+    }
+
+    /**Print out the current state of the UI data in the Builder
+     * object to the console. Used for debugging.
+     * */
+    public void build() {
+        System.out.print(currentUI);
     }
 }
