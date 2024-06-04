@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**A tool for building UI at your convenience.
  * @author hatohui
  * @version 1.0.0
@@ -8,7 +11,7 @@ public class UIBuilder {
     private final UIComponents Compo = new UIComponents();
     private final ColorWrapper Color = new ColorWrapper();
     private UserInterface UI;
-    private String currentUI = "";
+    private ArrayList<String> currentUI = new ArrayList<>();
 
     /**Default constructor which create a
      * new empty UserInterface by default.
@@ -55,21 +58,21 @@ public class UIBuilder {
      * @param name a String to be displayed.
      * */
     public UIBuilder header(String name) {
-        currentUI += Compo.header(name) + "\n";
+        currentUI.add(Compo.header(name) + "\n");
         return this;
     }
 
     /**Add the top wall (ceiling) for your UI.
      * */
     public UIBuilder topWall() {
-        currentUI += Compo.topWall() + "\n";
+        currentUI.add(Compo.topWall() + "\n");
         return this;
     }
 
     /**Add a separator line to your UI.
      * */
     public UIBuilder separator() {
-        currentUI += Compo.separator() + "\n";
+        currentUI.add(separator() + "\n");
         return this;
     }
 
@@ -78,14 +81,14 @@ public class UIBuilder {
      * @param material a char symbol constructing the separator.
      * */
     public UIBuilder separator(Character material) {
-        currentUI += Compo.separator(material) + "\n";
+        currentUI.add(Compo.separator(material) + "\n");
         return this;
     }
 
     /**Add the bottom wall String (floor) to your UI.
      * */
     public UIBuilder bottomWall() {
-        currentUI += Compo.bottomWall() + "\n";
+        currentUI.add(Compo.bottomWall() + "\n");
         return this;
     }
 
@@ -93,7 +96,7 @@ public class UIBuilder {
      * your UI.
      * */
     public UIBuilder emptyWall() {
-        currentUI += Compo.emptyWall() + "\n";
+        currentUI.add(Compo.emptyWall() + "\n");
         return this;
     }
 
@@ -103,7 +106,7 @@ public class UIBuilder {
      *                printed.
      * */
     public UIBuilder options(String[] options) {
-        currentUI += Compo.options(options) + "\n";
+        currentUI.add(Compo.options(options) + "\n");
         return this;
     }
 
@@ -113,7 +116,7 @@ public class UIBuilder {
      * @param optionText a String to what the option is for
      * */
     public UIBuilder option(String buttonText, String optionText) {
-        currentUI += Compo.option(buttonText, optionText) + "\n";
+        currentUI.add(Compo.option(buttonText, optionText) + "\n");
         return this;
     }
 
@@ -124,7 +127,7 @@ public class UIBuilder {
      * @param text a String to display.
      * */
     public UIBuilder description(String text, int padding) {
-        currentUI += Compo.description(text, padding) + "\n";
+        currentUI.add(Compo.description(text, padding) + "\n");
         return this;
     }
 
@@ -136,7 +139,7 @@ public class UIBuilder {
      *                left wall to its content.
      * */
     public UIBuilder leftString(String text, int padding) {
-        currentUI += Compo.leftString(text, padding) + "\n";
+        currentUI.add(Compo.leftString(text, padding) + "\n");
         return this;
     }
 
@@ -148,7 +151,7 @@ public class UIBuilder {
      *                right wall to its content.
      * */
     public UIBuilder rightString(String text, int padding) {
-        currentUI += Compo.rightString(text, padding) + "\n";
+        currentUI.add(Compo.rightString(text, padding) + "\n");
         return this;
     }
 
@@ -158,7 +161,7 @@ public class UIBuilder {
      */
     public void reset() {
         UI = new UserInterface();
-        currentUI = "";
+        currentUI.clear();
     }
 
     /**Return the UserInterface Object containing data of your
@@ -168,9 +171,9 @@ public class UIBuilder {
      * */
     public UserInterface saveAndReset() {
         UserInterface value = new UserInterface();
-        value.setUI(currentUI);
+        value.setUI(String.join("",currentUI));
         UI = new UserInterface();
-        currentUI = "";
+        currentUI.clear();
         return value;
     }
 
@@ -179,8 +182,8 @@ public class UIBuilder {
      * to access or restore the data use load()
      * */
     public UIBuilder save() {
-        UI.setUI(currentUI);
-        currentUI = "";
+        UI.setUI(String.join("",currentUI));
+        currentUI.clear();
         return this;
     }
 
@@ -188,7 +191,10 @@ public class UIBuilder {
      * for further operations. Usually used to load presets.
      * */
     public UIBuilder load() {
-        currentUI = UI.getUI();
+        String[] values = UI.getUI().split("\n");
+        for (String value: values) {
+            currentUI.add(value + "\n");
+        }
         return this;
     }
 
@@ -196,7 +202,7 @@ public class UIBuilder {
      * @return UserInterface object
      * */
     public UserInterface saveAndReturn() {
-        UI.setUI(currentUI);
+        UI.setUI(String.join("",currentUI));
         return UI;
     }
 
@@ -213,5 +219,58 @@ public class UIBuilder {
      * */
     public void build() {
         System.out.print(currentUI);
+    }
+
+    /**Adding color into your components.
+     *@param color to add Color into the prior text. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * */
+    public UIBuilder withColor(String color) {
+        String vertical = String.valueOf(UIComponents.getVertical());
+        StringBuilder newString = new StringBuilder();
+
+        String[] parts = currentUI.getLast()
+                .split(vertical);
+
+        for (String part: parts) {
+            if (part.length() <= 1) continue;
+            newString.append(vertical)
+                .append(Color.addColor(part, color))
+                .append(vertical).append("\n");
+        }
+
+        currentUI.removeLast();
+        currentUI.add(newString.toString());
+
+        return this;
+    }
+
+    /**Adding color into your components.
+     * @param color to add Color into the prior text. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * @param background to add Color into the background of component. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * */
+    public UIBuilder withColor(String color, String background) {
+        String vertical = String.valueOf(UIComponents.getVertical());
+        StringBuilder newString = new StringBuilder();
+
+        String[] parts = currentUI.getLast()
+                .split(vertical);
+
+        for (String part: parts) {
+            if (part.length() <= 1) continue;
+            newString.append(vertical)
+                    .append(Color.addColor(part, color, background))
+                    .append(vertical).append("\n");
+        }
+
+        currentUI.removeLast();
+        currentUI.add(newString.toString());
+
+        return this;
     }
 }

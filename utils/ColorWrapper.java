@@ -40,7 +40,15 @@ public class ColorWrapper {
     private static final String BRIGHT_BACKGROUND_CYAN = "\u001B[46;1m";
     private static final String BRIGHT_BACKGROUND_WHITE = "\u001B[47;1m";
 
+    /**Add color to the text of given String
+     * @param string a String receiving colors
+     * @param color a String that matches the colorCode
+     * @return a String with color
+     * @throws IllegalArgumentException when no color matches
+     *          or when message is null
+     * */
     public String addColor(String string, String color) {
+        if (string.isEmpty()) throw new IllegalArgumentException("Argument passed is empty");
         switch (color.toUpperCase()) {
             case "BLACK":
                 return BLACK + string + RESET;
@@ -79,7 +87,16 @@ public class ColorWrapper {
         }
     }
 
+    /**Add background color to given String
+     * @param string a String to display
+     * @param color a String that matches the colorCode
+     * @return a String with background color
+     * @throws IllegalArgumentException when no color matches
+     *          or when message is null
+     * */
     public String addBackgroundColor(String string, String color) {
+        if (string.isEmpty()) throw new IllegalArgumentException("Argument passed is empty");
+
         switch (color.toUpperCase()) {
             case "BLACK":
                 return BACKGROUND_BLACK + string + RESET;
@@ -116,5 +133,129 @@ public class ColorWrapper {
             default:
                 throw new IllegalArgumentException("Invalid Background Color.");
         }
+    }
+
+    /**Add background color to given String
+     * @param string a String to display
+     * @param textColor String that matches the colorCode
+     *                  for the text
+     * @param backgroundColor String that matches the colorCode
+     *                        for the background
+     * @return a colored String with background color
+     * @throws IllegalArgumentException when no color matches
+     *          or when message is null
+     * */
+    public String addColor(String string, String textColor, String backgroundColor) {
+        if (string.isEmpty()) throw new IllegalArgumentException("Argument passed is empty");
+
+        String textColorCode;
+        switch (textColor.toUpperCase()) {
+            case "BLACK":
+                textColorCode = BLACK;
+                break;
+            case "RED":
+                textColorCode = RED;
+                break;
+            case "GREEN":
+                textColorCode = GREEN;
+                break;
+            case "YELLOW":
+                textColorCode = YELLOW;
+                break;
+            case "BLUE":
+                textColorCode = BLUE;
+                break;
+            case "MAGENTA":
+                textColorCode = MAGENTA;
+                break;
+            case "CYAN":
+                textColorCode = CYAN;
+                break;
+            case "WHITE":
+                textColorCode = WHITE;
+                break;
+            case "BRIGHT_BLACK":
+                textColorCode = BRIGHT_BLACK;
+                break;
+            case "BRIGHT_RED":
+                textColorCode = BRIGHT_RED;
+                break;
+            case "BRIGHT_GREEN":
+                textColorCode = BRIGHT_GREEN;
+                break;
+            case "BRIGHT_YELLOW":
+                textColorCode = BRIGHT_YELLOW;
+                break;
+            case "BRIGHT_BLUE":
+                textColorCode = BRIGHT_BLUE;
+                break;
+            case "BRIGHT_MAGENTA":
+                textColorCode = BRIGHT_MAGENTA;
+                break;
+            case "BRIGHT_CYAN":
+                textColorCode = BRIGHT_CYAN;
+                break;
+            case "BRIGHT_WHITE":
+                textColorCode = BRIGHT_WHITE;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid Text Color.");
+        }
+
+        String backgroundColorCode;
+        switch (backgroundColor.toUpperCase()) {
+            case "BLACK":
+                backgroundColorCode = BACKGROUND_BLACK;
+                break;
+            case "RED":
+                backgroundColorCode = BACKGROUND_RED;
+                break;
+            case "GREEN":
+                backgroundColorCode = BACKGROUND_GREEN;
+                break;
+            case "YELLOW":
+                backgroundColorCode = BACKGROUND_YELLOW;
+                break;
+            case "BLUE":
+                backgroundColorCode = BACKGROUND_BLUE;
+                break;
+            case "MAGENTA":
+                backgroundColorCode = BACKGROUND_MAGENTA;
+                break;
+            case "CYAN":
+                backgroundColorCode = BACKGROUND_CYAN;
+                break;
+            case "WHITE":
+                backgroundColorCode = BACKGROUND_WHITE;
+                break;
+            case "BRIGHT_BLACK":
+                backgroundColorCode = BRIGHT_BACKGROUND_BLACK;
+                break;
+            case "BRIGHT_RED":
+                backgroundColorCode = BRIGHT_BACKGROUND_RED;
+                break;
+            case "BRIGHT_GREEN":
+                backgroundColorCode = BRIGHT_BACKGROUND_GREEN;
+                break;
+            case "BRIGHT_YELLOW":
+                backgroundColorCode = BRIGHT_BACKGROUND_YELLOW;
+                break;
+            case "BRIGHT_BLUE":
+                backgroundColorCode = BRIGHT_BACKGROUND_BLUE;
+                break;
+            case "BRIGHT_MAGENTA":
+                backgroundColorCode = BRIGHT_BACKGROUND_MAGENTA;
+                break;
+            case "BRIGHT_CYAN":
+                backgroundColorCode = BRIGHT_BACKGROUND_CYAN;
+                break;
+            case "BRIGHT_WHITE":
+                backgroundColorCode = BRIGHT_BACKGROUND_WHITE;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid Background Color.");
+        }
+
+        return textColorCode + backgroundColorCode + string + RESET;
     }
 }

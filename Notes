@@ -33,3 +33,14 @@ Full block: █
 Light shade: ░
 Medium shade: ▒
 Dark shade: ▓
+
+>> Colors Available:
+BLACK
+RED
+GREEN
+YELLOW
+BLUE
+MAGENTA
+CYAN
+WHITE
+and their BRIGHT_ version

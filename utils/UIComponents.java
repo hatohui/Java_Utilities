@@ -8,16 +8,16 @@ import java.util.stream.Stream;
  * @author hatohui
  */
 public class UIComponents {
-    private static final char completedLoading = '█';
-    private static final char incompleteLoading = '░';
-    private static final char defaultMaterial = '═';
-    private static final char vertical = '║';
-    private static final char topLeft = '╔';
-    private static final char topRight = '╗';
-    private static final char horizontal = '═';
-    private static final char bottomLeft = '╚';
-    private static final char bottomRight = '╝';
-    private static final char background = ' ';
+    private static char completedLoading = '█';
+    private static char incompleteLoading = '░';
+    private static char defaultMaterial = '═';
+    private static char vertical = '║';
+    private static char topLeft = '╔';
+    private static char topRight = '╗';
+    private static char horizontal = '═';
+    private static char bottomLeft = '╚';
+    private static char bottomRight = '╝';
+    private static char background = ' ';
     private int horizontalLength = 70;
 
     /**
@@ -438,5 +438,85 @@ public class UIComponents {
                 .forEach(string::append);
         string.append(vertical);
         return string.toString();
+    }
+
+    public static char getVertical() {
+        return vertical;
+    }
+
+    public static char getCompletedLoading() {
+        return completedLoading;
+    }
+
+    public static char getIncompleteLoading() {
+        return incompleteLoading;
+    }
+
+    public static char getDefaultMaterial() {
+        return defaultMaterial;
+    }
+
+    public static char getTopLeft() {
+        return topLeft;
+    }
+
+    public static char getTopRight() {
+        return topRight;
+    }
+
+    public static char getHorizontal() {
+        return horizontal;
+    }
+
+    public static char getBottomLeft() {
+        return bottomLeft;
+    }
+
+    public static char getBottomRight() {
+        return bottomRight;
+    }
+
+    public static char getBackground() {
+        return background;
+    }
+
+    public static void setCompletedLoading(char completedLoading) {
+        UIComponents.completedLoading = completedLoading;
+    }
+
+    public static void setIncompleteLoading(char incompleteLoading) {
+        UIComponents.incompleteLoading = incompleteLoading;
+    }
+
+    public static void setDefaultMaterial(char defaultMaterial) {
+        UIComponents.defaultMaterial = defaultMaterial;
+    }
+
+    public static void setVertical(char vertical) {
+        UIComponents.vertical = vertical;
+    }
+
+    public static void setTopLeft(char topLeft) {
+        UIComponents.topLeft = topLeft;
+    }
+
+    public static void setTopRight(char topRight) {
+        UIComponents.topRight = topRight;
+    }
+
+    public static void setHorizontal(char horizontal) {
+        UIComponents.horizontal = horizontal;
+    }
+
+    public static void setBottomLeft(char bottomLeft) {
+        UIComponents.bottomLeft = bottomLeft;
+    }
+
+    public static void setBottomRight(char bottomRight) {
+        UIComponents.bottomRight = bottomRight;
+    }
+
+    public static void setBackground(char background) {
+        UIComponents.background = background;
     }
 }
