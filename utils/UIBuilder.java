@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**A tool for building UI at your convenience.
  * @author hatohui
@@ -271,6 +272,59 @@ public class UIBuilder {
         currentUI.removeLast();
         currentUI.add(newString.toString());
 
+        return this;
+    }
+
+    /**Adding color into your components.
+     * @param background to add Color into the background of component. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * @param color a String that indicates the color.
+     * @param padding padding that will remain uncolored.
+     * */
+    public UIBuilder withColor(String background, String color,  int padding) {
+        String vertical = String.valueOf(UIComponents.getVertical());
+        StringBuilder newString = new StringBuilder();
+
+        String[] parts = currentUI.getLast()
+                .split(vertical);
+
+        for (String part: parts) {
+            if (part.length() <= 1) continue;
+
+            StringBuilder pad = new StringBuilder();
+
+            Stream.generate(UIComponents::getBackground)
+                            .limit(padding)
+                            .forEach(pad::append);
+
+            newString.append(vertical)
+                    .append(Color.addColor(part, color, background))
+                    .append(vertical).append("\n");
+        }
+
+        currentUI.removeLast();
+        currentUI.add(newString.toString());
+
+        return this;
+    }
+
+    /**Set the color for the border before creating the UI
+     * This might not work with some special symbols.
+     * */
+    public UIBuilder setBorderColor(String color) {
+        UIComponents.setBottomLeft(Color.addColor(
+                String.valueOf(UIComponents.getBottomLeft()), color).charAt(0));
+        UIComponents.setBottomRight(Color.addColor(
+                String.valueOf(UIComponents.getBottomRight()), color).charAt(0));
+        UIComponents.setHorizontal(Color.addColor(
+                String.valueOf(UIComponents.getHorizontal()), color).charAt(0));
+        UIComponents.setVertical(Color.addColor(
+                String.valueOf(UIComponents.getVertical()), color).charAt(0));
+        UIComponents.setTopLeft(Color.addColor(
+                String.valueOf(UIComponents.getTopLeft()), color).charAt(0));
+        UIComponents.setTopRight(Color.addColor(
+                String.valueOf(UIComponents.getTopRight()), color).charAt(0));
         return this;
     }
 }
