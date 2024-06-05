@@ -1,4 +1,6 @@
 package utils;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ColorWrapper {
     // Text Colors
@@ -39,6 +41,47 @@ public class ColorWrapper {
     private static final String BRIGHT_BACKGROUND_MAGENTA = "\u001B[45;1m";
     private static final String BRIGHT_BACKGROUND_CYAN = "\u001B[46;1m";
     private static final String BRIGHT_BACKGROUND_WHITE = "\u001B[47;1m";
+
+    private static final Map<String, String> colorMap = new HashMap<>();
+    private static final Map<String, String> backgroundColorMap = new HashMap<>();
+
+    static {
+        colorMap.put("RESET", RESET);
+        colorMap.put("BLACK", BLACK);
+        colorMap.put("RED", RED);
+        colorMap.put("GREEN", GREEN);
+        colorMap.put("YELLOW", YELLOW);
+        colorMap.put("BLUE", BLUE);
+        colorMap.put("MAGENTA", MAGENTA);
+        colorMap.put("CYAN", CYAN);
+        colorMap.put("WHITE", WHITE);
+        colorMap.put("BRIGHT_BLACK", BRIGHT_BLACK);
+        colorMap.put("BRIGHT_RED", BRIGHT_RED);
+        colorMap.put("BRIGHT_GREEN", BRIGHT_GREEN);
+        colorMap.put("BRIGHT_YELLOW", BRIGHT_YELLOW);
+        colorMap.put("BRIGHT_BLUE", BRIGHT_BLUE);
+        colorMap.put("BRIGHT_MAGENTA", BRIGHT_MAGENTA);
+        colorMap.put("BRIGHT_CYAN", BRIGHT_CYAN);
+        colorMap.put("BRIGHT_WHITE", BRIGHT_WHITE);
+
+        backgroundColorMap.put("BLACK", BACKGROUND_BLACK);
+        backgroundColorMap.put("RED", BACKGROUND_RED);
+        backgroundColorMap.put("GREEN", BACKGROUND_GREEN);
+        backgroundColorMap.put("YELLOW", BACKGROUND_YELLOW);
+        backgroundColorMap.put("BLUE", BACKGROUND_BLUE);
+        backgroundColorMap.put("MAGENTA", BACKGROUND_MAGENTA);
+        backgroundColorMap.put("CYAN", BACKGROUND_CYAN);
+        backgroundColorMap.put("WHITE", BACKGROUND_WHITE);
+        backgroundColorMap.put("BRIGHT_BLACK", BRIGHT_BACKGROUND_BLACK);
+        backgroundColorMap.put("BRIGHT_RED", BRIGHT_BACKGROUND_RED);
+        backgroundColorMap.put("BRIGHT_GREEN", BRIGHT_BACKGROUND_GREEN);
+        backgroundColorMap.put("BRIGHT_YELLOW", BRIGHT_BACKGROUND_YELLOW);
+        backgroundColorMap.put("BRIGHT_BLUE", BRIGHT_BACKGROUND_BLUE);
+        backgroundColorMap.put("BRIGHT_MAGENTA", BRIGHT_BACKGROUND_MAGENTA);
+        backgroundColorMap.put("BRIGHT_CYAN", BRIGHT_BACKGROUND_CYAN);
+        backgroundColorMap.put("BRIGHT_WHITE", BRIGHT_BACKGROUND_WHITE);
+    }
+
 
     /**Add color to the text of given String
      * @param string a String receiving colors
@@ -257,5 +300,14 @@ public class ColorWrapper {
         }
 
         return textColorCode + backgroundColorCode + string + RESET;
+    }
+
+
+    public static String getColor(String color) {
+        return colorMap.getOrDefault(color, RESET);
+    }
+
+    public static String getBackground(String backgroundColor) {
+        return backgroundColorMap.getOrDefault(backgroundColor, RESET);
     }
 }

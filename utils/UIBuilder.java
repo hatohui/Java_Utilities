@@ -324,4 +324,17 @@ public class UIBuilder {
         currentUI.add(toAddColor);
         return this;
     }
+
+    public UIBuilder setDefaultColor(String color) {
+        ArrayList<String> newUI = new ArrayList<>();
+        for (String string: currentUI) {
+            if (string.contains("\u001B[0m")) {
+                string = string.replace("\u001B[0m", "\u001B[0m" + ColorWrapper.getColor(color));
+            }
+            string = Color.addColor(string, color);
+            newUI.add(string);
+        }
+        currentUI = newUI;
+        return this;
+    }
 }
