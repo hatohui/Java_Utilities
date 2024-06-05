@@ -222,7 +222,7 @@ public class UIBuilder {
         System.out.print(currentUI);
     }
 
-    /**Adding color into your components.
+    /**Adding color into your components sparing the border.
      *@param color to add Color into the prior text. Available colors
      *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
      *             ,WHITE.
@@ -247,7 +247,7 @@ public class UIBuilder {
         return this;
     }
 
-    /**Adding color into your components.
+    /**Adding color into your components sparing the border.
      * @param color to add Color into the prior text. Available colors
      *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
      *             ,WHITE.
@@ -275,40 +275,6 @@ public class UIBuilder {
         return this;
     }
 
-    /**Adding color into your components.
-     * @param background to add Color into the background of component. Available colors
-     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
-     *             ,WHITE.
-     * @param color a String that indicates the color.
-     * @param padding padding that will remain uncolored.
-     * */
-    public UIBuilder withColor(String background, String color,  int padding) {
-        String vertical = String.valueOf(UIComponents.getVertical());
-        StringBuilder newString = new StringBuilder();
-
-        String[] parts = currentUI.getLast()
-                .split(vertical);
-
-        for (String part: parts) {
-            if (part.length() <= 1) continue;
-
-            StringBuilder pad = new StringBuilder();
-
-            Stream.generate(UIComponents::getBackground)
-                            .limit(padding)
-                            .forEach(pad::append);
-
-            newString.append(vertical)
-                    .append(Color.addColor(part, color, background))
-                    .append(vertical).append("\n");
-        }
-
-        currentUI.removeLast();
-        currentUI.add(newString.toString());
-
-        return this;
-    }
-
     /**Set the color for the border before creating the UI
      * This might not work with some special symbols.
      * */
@@ -325,6 +291,37 @@ public class UIBuilder {
                 String.valueOf(UIComponents.getTopLeft()), color).charAt(0));
         UIComponents.setTopRight(Color.addColor(
                 String.valueOf(UIComponents.getTopRight()), color).charAt(0));
+        return this;
+    }
+
+
+    /**Adding color into your components including the border.
+     * @param color to add Color into the prior text. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * */
+    public UIBuilder withColorIncludingBorder(String color) {
+        String toAddColor = currentUI.getLast();
+        toAddColor = Color.addColor(toAddColor, color);
+        currentUI.removeLast();
+        currentUI.add(toAddColor);
+        return this;
+    }
+
+    /**Adding color into your components including the border.
+     * @param color to add Color into the prior text. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * @param background to add Color into the background of component. Available colors
+     *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+     *             ,WHITE.
+     * */
+    public UIBuilder withColorIncludingBorder(String color, String background) {
+        String toAddColor = currentUI.getLast();
+        toAddColor = Color.addColor(toAddColor, color);
+        toAddColor = Color.addBackgroundColor(toAddColor,color);
+        currentUI.removeLast();
+        currentUI.add(toAddColor);
         return this;
     }
 }
