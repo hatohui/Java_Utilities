@@ -1,8 +1,6 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**A tool for building UI at your convenience.
  * @author hatohui
@@ -13,6 +11,9 @@ public class UIBuilder {
     private final ColorWrapper Color = new ColorWrapper();
     private UserInterface UI;
     private ArrayList<String> currentUI = new ArrayList<>();
+    private String emptyWall = "";
+    private String topWall = "";
+    private String bottomWall = "";
 
     /**Default constructor which create a
      * new empty UserInterface by default.
@@ -34,26 +35,6 @@ public class UIBuilder {
 
     /* UTILIZING UI COMPONENTS */
 
-    /**Set the size of the UI to a new given size
-     * @param horizontal an integer that the size
-     *                   of the UI is set to.
-     * */
-    public UIBuilder setSize(int horizontal) {
-        Compo.setHorizontalLength(horizontal);
-        return this;
-    }
-
-    /**Print an animated loading bar onto the console.
-     * @param message a String that is displayed
-     *                before the loading.
-     * @param ticks number of ticks for the loading bar.
-     * @param interval defines the time in between the ticks.
-     * */
-    public UIBuilder loader(String message, int ticks, int interval) {
-        Compo.loadingBar(message, ticks, interval);
-        return this;
-    }
-
     /**Add a header for your UI displaying the given text
      * in the middle.
      * @param name a String to be displayed.
@@ -66,14 +47,15 @@ public class UIBuilder {
     /**Add the top wall (ceiling) for your UI.
      * */
     public UIBuilder topWall() {
-        currentUI.add(Compo.topWall() + "\n");
+        if (topWall.isEmpty()) topWall = Compo.topWall() + "\n";
+        currentUI.add(topWall);
         return this;
     }
 
     /**Add a separator line to your UI.
      * */
     public UIBuilder separator() {
-        currentUI.add(separator() + "\n");
+        currentUI.add(Compo.separator() + "\n");
         return this;
     }
 
@@ -89,7 +71,10 @@ public class UIBuilder {
     /**Add the bottom wall String (floor) to your UI.
      * */
     public UIBuilder bottomWall() {
-        currentUI.add(Compo.bottomWall() + "\n");
+        if (bottomWall.isEmpty())
+            bottomWall = Compo.bottomWall() + "\n";
+
+        currentUI.add(bottomWall);
         return this;
     }
 
@@ -97,7 +82,8 @@ public class UIBuilder {
      * your UI.
      * */
     public UIBuilder emptyWall() {
-        currentUI.add(Compo.emptyWall() + "\n");
+        if (emptyWall.isEmpty()) emptyWall =  Compo.emptyWall() + "\n";
+        currentUI.add(emptyWall);
         return this;
     }
 
@@ -275,26 +261,6 @@ public class UIBuilder {
         return this;
     }
 
-    /**Set the color for the border before creating the UI
-     * This might not work with some special symbols.
-     * */
-    public UIBuilder setBorderColor(String color) {
-        UIComponents.setBottomLeft(Color.addColor(
-                String.valueOf(UIComponents.getBottomLeft()), color).charAt(0));
-        UIComponents.setBottomRight(Color.addColor(
-                String.valueOf(UIComponents.getBottomRight()), color).charAt(0));
-        UIComponents.setHorizontal(Color.addColor(
-                String.valueOf(UIComponents.getHorizontal()), color).charAt(0));
-        UIComponents.setVertical(Color.addColor(
-                String.valueOf(UIComponents.getVertical()), color).charAt(0));
-        UIComponents.setTopLeft(Color.addColor(
-                String.valueOf(UIComponents.getTopLeft()), color).charAt(0));
-        UIComponents.setTopRight(Color.addColor(
-                String.valueOf(UIComponents.getTopRight()), color).charAt(0));
-        return this;
-    }
-
-
     /**Adding color into your components including the border.
      * @param color to add Color into the prior text. Available colors
      *             includes BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
@@ -325,6 +291,9 @@ public class UIBuilder {
         return this;
     }
 
+    /**Setting the default text color for the page.
+     * @param color takes in the colors name
+     * */
     public UIBuilder setDefaultColor(String color) {
         ArrayList<String> newUI = new ArrayList<>();
         for (String string: currentUI) {

@@ -1,0 +1,3 @@
+Adding Preloaded String to prevent multiple loading
+Fix and adjust the design for the UI Coloring
+Add Input COLORS

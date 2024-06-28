@@ -1,7 +1,5 @@
 package utils;
 
-import java.io.IOException;
-
 public class UserInterface {
     private String UI;
 
@@ -29,6 +27,7 @@ public class UserInterface {
     public String getUI() {
         return UI;
     }
+
     /**
      * Print out the UI to the console.
      */

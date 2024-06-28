@@ -85,9 +85,71 @@ public class UIComponents {
                 System.out.print(loading);
                 Thread.sleep(interval);
             }
+
+            System.out.println();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Print into the console an animated loading bar: █████░░░░░░
+     * <br>Yes, with colors. You can choose a different color by adding an extra
+     * parameter for color at the end.
+     * message, loadTime, interval, color
+     * <br>(change the values in the source code if you want a different bar)
+     *
+     * @param message  - a string to display before the loading bar.
+     * @param loadTime - an integer indicates amount of tick
+     *                 for the loading bar.
+     * @param interval - an integer that indicates time period
+     *                 per tick (in milliseconds).
+     */
+    public void loadingBarWithColor(String message, int loadTime, int interval, String Color) {
+        try {
+            StringBuilder builder = new StringBuilder();
+
+            if (!message.isEmpty()) message += "\t";
+
+            //generates the stream
+            Stream.generate(() -> ' ')
+                    .limit(loadTime)
+                    .forEach(builder::append);
+
+            //loads
+            double percentage = 0;
+            double count = 0;
+            for (int i = 0; i < loadTime; ++i) {
+                builder.replace(i, i + 1, String.valueOf(completedLoading));
+                count++;
+                percentage = ((double) 100 / loadTime) * count;
+                String loading = String.format("\r%s|%s%s\u001B[0m| %.2f", message,
+                        ColorWrapper.getColor(Color), builder, percentage);
+                System.out.print(loading + '%');
+                Thread.sleep(interval);
+            }
+
+            System.out.println();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Print into the console an animated green loading bar: █████░░░░░░
+     * <br>Yes, with colors. You can choose a different color by adding an extra
+     * parameter for color at the end.
+     * message, loadTime, interval, color
+     * <br>(change the values in the source code if you want a different bar)
+     *
+     * @param message  - a string to display before the loading bar.
+     * @param loadTime - an integer indicates amount of tick
+     *                 for the loading bar.
+     * @param interval - an integer that indicates time period
+     *                 per tick (in milliseconds).
+     */
+    public void loadingBarWithColor(String message, int loadTime, int interval) {
+       loadingBarWithColor(message, loadTime, interval, "GREEN");
     }
 
     /**
@@ -440,6 +502,32 @@ public class UIComponents {
         return string.toString();
     }
 
+    /**Return an error String to print into the console.
+    * @param error the error String to be printed.
+    */
+    public String errorMessage(String error) {
+        String errorString = "\u001B[41;1m \u001B[30mERROR \u001B[0m ";
+        return errorString + error;
+    }
+
+    /**Return a success String to print into the console.
+     * @param message the success String to be printed.
+     */
+    public String successMessage(String message) {
+        String errorString = "\u001B[42;1m \u001B[30mSUCCESS \u001B[0m ";
+        return errorString + message;
+    }
+
+    /**Return a warning String to print into the console.
+     * @param message the warning String to be printed.
+     */
+    public String warningMessage(String message) {
+        String warningString = "\u001B[43;1m \u001B[30mWARNING \u001B[0m ";
+        return warningString + message;
+    }
+
+    /* A bunch of setters and getters */
+
     public static char getVertical() {
         return vertical;
     }
@@ -480,43 +568,4 @@ public class UIComponents {
         return background;
     }
 
-    public static void setCompletedLoading(char completedLoading) {
-        UIComponents.completedLoading = completedLoading;
-    }
-
-    public static void setIncompleteLoading(char incompleteLoading) {
-        UIComponents.incompleteLoading = incompleteLoading;
-    }
-
-    public static void setDefaultMaterial(char defaultMaterial) {
-        UIComponents.defaultMaterial = defaultMaterial;
-    }
-
-    public static void setVertical(char vertical) {
-        UIComponents.vertical = vertical;
-    }
-
-    public static void setTopLeft(char topLeft) {
-        UIComponents.topLeft = topLeft;
-    }
-
-    public static void setTopRight(char topRight) {
-        UIComponents.topRight = topRight;
-    }
-
-    public static void setHorizontal(char horizontal) {
-        UIComponents.horizontal = horizontal;
-    }
-
-    public static void setBottomLeft(char bottomLeft) {
-        UIComponents.bottomLeft = bottomLeft;
-    }
-
-    public static void setBottomRight(char bottomRight) {
-        UIComponents.bottomRight = bottomRight;
-    }
-
-    public static void setBackground(char background) {
-        UIComponents.background = background;
-    }
 }

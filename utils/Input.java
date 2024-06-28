@@ -13,6 +13,19 @@ public class Input {
     //scanner
     private static final Scanner scanner = new Scanner(System.in);
 
+    private static String errorMessage(String error) {
+        String errorString = "\u001B[41;1m \u001B[30mERROR \u001B[0m ";
+        return errorString + error;
+    }
+
+    private static String successMessage(String message) {
+        String errorString = "\u001B[42;1m \u001B[30mSUCCESS \u001B[0m ";
+        return errorString + message;
+    }
+
+    private static void separator() {
+        System.out.println("──────────────────────────────────────────────────────────────────────────────");
+    }
     /* HANDLE STRINGS*/
 
     private static String getString(String message, boolean allowSpecial, String regex) {
@@ -23,7 +36,7 @@ public class Input {
         //getInput
         while (true) {
             try {
-                System.out.print("> " + message + ": ");
+                System.out.print("\n\u001B[34;1m " + message + " \u001B[0m>  ");
                 String str = scanner.nextLine().trim();
 
                 //check null
@@ -32,7 +45,7 @@ public class Input {
                 }
 
                 //check contain any special symbols
-                if (!allowSpecial)
+                if (allowSpecial)
                     if (!str.matches("\\w+"))
                         throw new IllegalArgumentException("Input can only " +
                                 "contain letters, numbers and '_', try again.");
@@ -45,7 +58,8 @@ public class Input {
 
                 return str;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                separator();
+                System.out.println(errorMessage(e.getMessage()));
             }
         }
     }
@@ -139,7 +153,7 @@ public class Input {
         //getInput
         while (true) {
             try {
-                System.out.print("> " + message + ": ");
+                System.out.print("\n\u001B[34;1m " + message + " \u001B[0m>  ");
                 int number = Integer.parseInt(scanner.nextLine());
 
                 //check range
@@ -151,9 +165,10 @@ public class Input {
 
                 return number;
             } catch (Exception e) {
+                separator();
                 if (e instanceof NumberFormatException) {
-                    System.out.println("Please input an integer.");
-                } else System.out.println(e.getMessage());
+                    System.out.println(errorMessage("Please input an integer."));
+                } else System.out.println(errorMessage(e.getMessage()));
             }
         }
     }
@@ -214,7 +229,7 @@ public class Input {
         //getInput
         while (true) {
             try {
-                System.out.print("> " + message + ": ");
+                System.out.print("\n\u001B[34;1m " + message + " \u001B[0m>  ");
                 double number = Double.parseDouble(scanner.nextLine());
 
                 //check range
@@ -226,9 +241,10 @@ public class Input {
 
                 return number;
             } catch (Exception e) {
+                separator();
                 if (e instanceof NumberFormatException) {
-                    System.out.println("Please input a double.");
-                } else System.out.println(e.getMessage());
+                    System.out.println(errorMessage("Please input a double."));
+                } else System.out.println(errorMessage(e.getMessage()));
             }
         }
     }
@@ -289,7 +305,7 @@ public class Input {
         //getInput
         while (true) {
             try {
-                System.out.print("> " + message + ": ");
+                System.out.print("\n\u001B[34;1m " + message + " \u001B[0m>  ");
                 float number = Float.parseFloat(scanner.nextLine());
 
                 //check range
@@ -301,9 +317,10 @@ public class Input {
 
                 return number;
             } catch (Exception e) {
+                separator();
                 if (e instanceof NumberFormatException) {
-                    System.out.println("Please input a float.");
-                } else System.out.println(e.getMessage());
+                    System.out.println(errorMessage("Please input a float."));
+                } else System.out.println(errorMessage(e.getMessage()));
             }
         }
     }
@@ -354,12 +371,13 @@ public class Input {
 
         while (true) {
             try {
-                System.out.print("> " + message + ": ");
+                System.out.print("\n\u001B[34;1m " + message + " \u001B[0m>  ");
                 return scanner.nextLine().trim().charAt(0);
             } catch (Exception e) {
+                separator();
                 if (e instanceof IndexOutOfBoundsException) {
-                    System.out.println("Can't be empty, please input a character.");
-                } else System.out.println(e.getMessage());
+                    System.out.println(errorMessage("Can't be empty, please input a character."));
+                } else System.out.println(errorMessage(e.getMessage()));
             }
         }
     }
