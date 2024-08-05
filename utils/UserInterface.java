@@ -35,5 +35,4 @@ public class UserInterface {
         for (int i = 0; i < 20; i++) System.out.println("\n");
         System.out.print(this.UI);
     }
-
 }

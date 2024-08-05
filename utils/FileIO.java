@@ -9,7 +9,7 @@ public class FileIO extends ArrayList<String> {
     /**Return an array containing the current state of data in the File.
      * @return an ArrayList<String> containing the current data in the file.
      * */
-    public ArrayList<String> getCurrentState() {
+    public ArrayList<String> getState() {
         if (this.isEmpty())
             throw new IllegalStateException("there's no data in current state.");
         return this;
@@ -24,8 +24,11 @@ public class FileIO extends ArrayList<String> {
         fetch();
     }
 
+    /**Get data from the file and store in itself (ArrayList<String>)
+     * */
     public void fetch() {
         try {
+            this.clear();
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
             while (line != null) {
@@ -41,22 +44,30 @@ public class FileIO extends ArrayList<String> {
         }
     }
 
-    public void commit() {
+    /**Saves the data from the current state into the file.
+     * */
+    public boolean commit() {
         try {
             OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file));
             for (String str : this) {
                 writer.append(str);
             }
             writer.close();
+            return true;
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
                 System.out.println("File not found.");
             }
-            System.out.println(e.getMessage());
+            return false;
         }
     }
 
-    public ArrayList<String> findInFileContaining(String value) {
+    /**Find the data in the file including the inputted string
+     *
+     * @param value subString to be included
+     * @return an ArrayList of String containing the data included
+     * */
+    public ArrayList<String> findInclude(String value) {
         ArrayList<String> result = new ArrayList<>();
         for (String str: this) {
             if (str.toLowerCase().contains(value.toLowerCase())) {
@@ -66,6 +77,8 @@ public class FileIO extends ArrayList<String> {
         return result;
     }
 
+    /**Remove the line containing the data from the state.
+     * */
     public void remove(String value) {
         for (String str: this) {
             if (str.strip().equalsIgnoreCase(value)) {
@@ -74,11 +87,15 @@ public class FileIO extends ArrayList<String> {
         }
     }
 
+    /**Append a String into current state (Remember to commit to save the data)
+     * */
     public void append(String str) {
         this.add(str + "\n");
     }
 
+    /**For printing stuffs
+     * */
     public String toString() {
-        return String.join("", getCurrentState());
+        return String.join("", getState());
     }
 }
