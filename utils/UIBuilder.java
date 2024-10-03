@@ -192,6 +192,12 @@ public class UIBuilder {
         UI.setUI(String.join("",currentUI));
         return UI;
     }
+    /**Save the UI as a String and return it.
+     * @return a String
+     * */
+    public String saveToString() {
+        return String.join("", currentUI);
+    }
 
     /**Set the current UserInterface object that UIBuilder
      * is functioning on to a different one.

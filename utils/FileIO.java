@@ -79,12 +79,14 @@ public class FileIO extends ArrayList<String> {
 
     /**Remove the line containing the data from the state.
      * */
-    public void remove(String value) {
+    public boolean removeFirstInState(String value) {
         for (String str: this) {
-            if (str.strip().equalsIgnoreCase(value)) {
+            if (str.strip().equalsIgnoreCase(value.strip())) {
                 this.remove(str);
+                return true;
             };
         }
+        return false;
     }
 
     /**Append a String into current state (Remember to commit to save the data)
